@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Let the browser know that we scale the page according to the device width. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weber County Search and Rescue</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Header Starts -->
+    <header>
+      <div class="site-logo">
+        <img
+          src="./sitelogo.png"
+          alt="WeberSAR Logo"
+          title="WeberSAR Logo"
+          width="200px"
+        />
+      </div>
+      <!-- Hamburger menu button toggled on tablet and mobile screens -->
+      <div
+        class="hamburger"
+        id="menu-toggle"
+        aria-label="Toggle navigation"
+        role="button"
+        tabindex="0"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="nav-menu">
+        <ul>
+          <li><a href="./About.html">About WCSAR</a></li>
+          <li><a href="./Resources.html">Resources</a></li>
+          <li class="header-link-red">
+            <a href="./Donate.html">Donate to WCSAR</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <!-- Header End -->
+
+    <div class="color-section"></div>
+
+    <div class="service-container">
+      <div class="service-content">
+        <h1>Canine Search Team</h1>
+        <p>
+          Weber County Search and Rescue – Canine search team is an organization
+          of highly skilled individuals that are dedicated to saving lives and
+          expected to be ready to respond 24 hours a day, 7 days a week. The
+          organization consists of specialized teams that spend thousands of
+          hours honing their skills in all areas of rescue including:
+        </p>
+        <ul>
+            <li>Mountain Rescue</li>
+            <li>Swift Water Rescue</li>
+            <li>Avalanche Rescue</li>
+            <li>Lost Person Search</li>
+            <li>Under Water Search</li>
+            <li>Canine Search</li>
+            <li>Backcountry Skiing</li>
+            <li>Snowmobile Rescue</li>
+        </ul>
+        <img src="./canine_about.jpg" width="100%" style="margin-top: 20px;">
+      </div>
+      <div class="service-img">
+        <img src="./canine_page_mural.jpg" />
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-menu">
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./About.html">About WCSAR</a></li>
+          <li><a href="./Resources.html">Resources</a></li>
+          <li>
+            <a href="./Donate.html">Donate to WCSAR</a>
+          </li>
+        </ul>
+        <a
+          href="https://web.facebook.com/WeberCountySheriffsOfficeSearchAndRescue/?fref=ts&_rdc=1&_rdr#"
+          ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+            <path
+              d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"
+            /></svg
+        ></a>
+        <img src="./footerlogo.png" alt="Footer Logo" />
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const heroNavCards = document.getElementById("hero-nav-cards");
+        const header = document.querySelector("header");
+        const heroHome = document.querySelector(".hero-home");
+
+        // Mobile hamburger menu toggle: find the button and navigation list
+        const menuToggle = document.getElementById("menu-toggle");
+        const navList = document.querySelector(".nav-menu ul");
+        if (menuToggle && navList) {
+          menuToggle.addEventListener("click", function () {
+            navList.classList.toggle("show");
+          });
+        }
+
+        // Calculate when cards should become sticky
+        function calculateStickyPoint() {
+          const heroHomeBottom = heroHome.offsetTop + heroHome.offsetHeight;
+          const cardsHeight = heroNavCards.offsetHeight;
+          const headerHeight = header.offsetHeight;
+
+          // Cards become sticky when they reach the bottom of the header
+          return heroHomeBottom - cardsHeight - headerHeight;
+        }
+
+        // Toggle sticky class
+        function toggleStickyCards() {
+          const scrollPosition = window.scrollY;
+          const stickyPoint = calculateStickyPoint();
+
+          if (scrollPosition >= stickyPoint) {
+            heroNavCards.classList.add("sticky");
+          } else {
+            heroNavCards.classList.remove("sticky");
+          }
+        }
+
+        // Initialize
+        function init() {
+          // Set initial state
+          toggleStickyCards();
+
+          // Add scroll event listener with throttle
+          let ticking = false;
+          window.addEventListener("scroll", function () {
+            if (!ticking) {
+              window.requestAnimationFrame(function () {
+                toggleStickyCards();
+                ticking = false;
+              });
+              ticking = true;
+            }
+          });
+
+          // Handle resize
+          window.addEventListener("resize", function () {
+            // Recalculate and update
+            toggleStickyCards();
+          });
+        }
+
+        // Start
+        init();
+      });
+    </script>
+  </body>
+</html>
